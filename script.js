@@ -1,51 +1,47 @@
-let form = document.querySelector("form")
-let ul = document.querySelector("ul")
-let input =document.querySelector("input")
-let buttan = document.querySelector("button")
-let update = null;
 
+const firstinput= document.querySelector(".input-first");
+const lastinput= document.querySelector(".input-last");
+const select= document.querySelector("select");
+const num= document.querySelector(".input-num");
+const button= document.querySelector("button");
+const scoreboard=document.querySelector(".scoreboard")
 
-form.addEventListener("submit", (e)=>{
+button.addEventListener('click',(e)=>{
   e.preventDefault();
-  let inputvalue = input.value.trim()
+    const fullName=firstinput.value+" "+lastinput.value
+    const name =document.createElement('span')
+    name.append(fullName)
+    const country=document.createElement('span')
+    country.append(select.value)
+    const score=document.createElement('span')
+    score.append(num.value)
+    const deleted=document.createElement('button')
+    deleted.textContent='delete'
+    const plusfive=document.createElement('button')
+    plusfive.innerText='+5'
+     const minusfive=document.createElement('button')
+    minusfive.innerText='-5'
+    const scorecard=document.createElement('p')
+    scorecard.classList.add('displayscore')
+    scorecard.append(name,country,score,deleted,plusfive,minusfive)
+deleted.addEventListener('click', () => {
+        scorecard.remove();
+    });
 
-  if(update)
-  {
-    update.firstChild.textContent = inputvalue;
-    update =null;
-    buttan.textContent = "addtask"
-    input.value ="";
-    return;
-  }
+       plusfive.addEventListener('click', () => {
+        score.textContent = Number(score.textContent) + 5;
+    });
+      minusfive.addEventListener('click', () => {
+        let reversescor = Number(score.textContent);
+    if (reversescor > 0) {
+      score.textContent = Number(score.textContent) -5;
+    }
+    else{
+      score.textContent = 0;
 
-  
+    }
+    });
 
-  let li = document.createElement("li")
-  let span = document.createElement("span")
-  span.textContent = inputvalue;
-
-
- let editbuttan = document.createElement("button")
- editbuttan.textContent = "Edit"
-
-let deletebuttan = document.createElement("button")
- deletebuttan.textContent = "Delete"
-
-
- editbuttan.addEventListener("click", ()=>{
-  input.value = span.textContent;
-  update= li
-  buttan.textContent = "Update"
-  input.focus()
- })
-
- deletebuttan.addEventListener("click", ()=>{
-  li.remove()
-  input.focus()
- })
-
- li.append(span , editbuttan , deletebuttan)
-  ul.appendChild(li)
- 
-  input.value = "";
+    scoreboard.append(scorecard)
+    
 })
